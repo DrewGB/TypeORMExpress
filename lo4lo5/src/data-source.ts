@@ -8,7 +8,7 @@ export const AppDataSource = new DataSource({
     database: './database.sqlite',
     synchronize: true,
     logging: false,
-    entities: [User, Student],
+    entities: [User, Student], // If entity is not listed here table will NOT be created
     migrations: [], // Add your migration files here
     subscribers: [], // Add your subscriber files here
 });

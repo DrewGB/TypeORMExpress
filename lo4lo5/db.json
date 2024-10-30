@@ -1,0 +1,126 @@
+{
+  "students": [
+    {
+      "id": 1,
+      "givenName": "Ernesto",
+      "familyName": "Basoalto",
+      "email": "basoaltoe@saskpolytech.ca",
+      "phone": "306-659-4124",
+      "address": "1 Happy Place"
+    },
+    {
+      "id": 2,
+      "givenName": "Bob",
+      "familyName": "Smith",
+      "email": "bob@smith.ca",
+      "phone": "306-555-9999",
+      "address": "1 Sad Place"
+    },
+    {
+      "id": 3,
+      "givenName": "Sally",
+      "familyName": "Peters",
+      "email": "sally@peters.ca",
+      "phone": "306-555-1212",
+      "address": "1 Friendly Place"
+    },
+    {
+      "id": 4,
+      "givenName": "Wally",
+      "familyName": "West",
+      "email": "kid@flash.ca",
+      "phone": "306-222-8989",
+      "address": null
+    },
+    {
+      "id": 5,
+      "givenName": "Barry",
+      "familyName": "Allen",
+      "email": "flash@dc.ca",
+      "phone": "306-222-7676",
+      "address": null
+    },
+    {
+      "id": 6,
+      "givenName": "Bruce",
+      "familyName": "Wayne",
+      "email": "imbatman@dc.ca",
+      "phone": "306-280-2278",
+      "address": null
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "name": "👁❤U Shampoo",
+      "size": "600ml",
+      "price": 8.99
+    },
+    {
+      "id": 2,
+      "name": "👁❤U Conditioner",
+      "size": "600ml",
+      "price": 9.99
+    },
+    {
+      "id": 3,
+      "name": "👁❤U Conditioner",
+      "size": "1.5L",
+      "price": 15.99
+    },
+    {
+      "id": 4,
+      "name": "👁❤U Shampoo",
+      "size": "1.5L",
+      "price": 14.99
+    },
+    {
+      "id": 5,
+      "name": "👁❤U Shampoo",
+      "size": "4L",
+      "price": 23.9
+    },
+    {
+      "id": 6,
+      "name": "👁❤U Conditioner",
+      "size": "4L",
+      "price": 27.98
+    },
+    {
+      "id": 7,
+      "name": "👁❤U Body Wash",
+      "size": "950ml",
+      "price": 12.99
+    },
+    {
+      "id": 8,
+      "name": "👁❤U Body Wash",
+      "size": "600ml",
+      "price": 20.99
+    },
+    {
+      "id": 9,
+      "name": "👁❤U Body Wash",
+      "size": "4L",
+      "price": 35.99
+    },
+    {
+      "id": 10,
+      "name": "👁❤U Tooth Polish",
+      "size": "350ml",
+      "price": 6.99
+    },
+    {
+      "id": 11,
+      "name": "👁❤U Tooth Polish",
+      "size": "150ml",
+      "price": 3.99
+    },
+    {
+      "id": 12,
+      "name": "👁❤U Tooth Polish",
+      "size": "500ml",
+      "price": 11.99
+    }
+  ]
+}

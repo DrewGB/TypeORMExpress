@@ -53,7 +53,7 @@ export class UserController {
 
     @Route('delete', '/:id')
     async remove(request: Request, response: Response, next: NextFunction) {
-        const userToRemove = await this.userRepository.findOne(request.params.id);
+        const userToRemove = await this.userRepository.findOneBy({id: request.params.id});
         response.statusCode = 204; // No Content
         if (userToRemove) return this.userRepository.remove(userToRemove);
         else next(); // let index.ts catch the 404 error and reply with JSON

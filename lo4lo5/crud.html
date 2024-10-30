@@ -1,0 +1,137 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>PrimeVue + CDN</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="https://unpkg.com/primevue/umd/primevue.min.js"></script>
+<script src="https://unpkg.com/@primevue/themes/umd/aura.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+
+
+
+<!-- This is the "Template Area" had directives and double moustache like heandlebars -->
+<div id="app">
+<!--    v-model is the way Vue.js connects inputs tags to the ref variables -->
+    <p-datepicker v-model="dateForNow"></p-datepicker>
+    <br /><br />
+    {{ dateForNow }} <!-- Double moustache is for displaying data from the ref variable - one way read only -->
+
+    <ul>
+
+        <div class="card grid grid-cols-1 md:grid-cols-2 gap-4">
+            <p-inputgroup>
+                <p-inputgroupaddon> 🧑</p-inputgroupaddon>
+
+                <p-inputnumber v-model="studentToAdd.phone" placeholder="Phone"/>
+            </p-inputgroup>
+            <p-inputgroup>
+                <p-inputtext v-model="studentToAdd.givenName" placeholder="Given Name"/>
+            </p-inputgroup>
+            <p-inputgroup>
+                <p-inputtext v-model="studentToAdd.familyName" placeholder="Family Name"/>
+            </p-inputgroup>
+            <p-button @click="addStudent" rounded severity="info">Add</p-button>
+        </div>
+
+
+        <li v-for="student in studentsToDisplay" :key="student.id">
+            {{student.givenName}} - {{student.familyName}} <p-button @click="deleteStudent(student.id)" severity="danger">Delete</p-button>
+        </li>
+<!--        Sending the studentsToDisplay array into the component prop called "value" using a ":" colon -->
+        <p-datatable :value="studentsToDisplay" striped-rows removable-sort table-style="min-width: 50rem">
+            <p-column field="id" sortable header="UUID"></p-column>
+            <p-column field="givenName" sortable header="First"></p-column>
+            <p-column field="familyName" sortable header="Last"></p-column>
+
+        </p-datatable>
+
+    </ul>
+
+</div>
+
+<!-- This the script area similar to the router files in express -->
+<script type="module">
+    const { createApp, ref } = Vue;
+
+    const app = createApp({
+        setup() { //think of it like the post/get handler in express router.get()
+            const dateForNow = ref(new Date()); // Makes a proxy object - add watches so when the data changes the render changes
+            //date.value - this gives the developer access to the original data object
+            const studentsToDisplay = ref([]);
+            const studentToAdd = ref({
+
+                "givenName": "Drew",
+                "familyName": "Glasser",
+                "email": "g@d.ca",
+                "phone": "306-555-9999",
+                "address": "1 Windy Place",
+                "password": "Password@123"
+            })
+
+            async function getStudents() {
+                const studentsFromDB = await(await fetch("http://localhost:3004/students")).json()
+                console.log(studentsFromDB)
+                // dump the students from the db in the students to display
+                studentsToDisplay.value = studentsFromDB
+            }
+
+            async function deleteStudent(id){
+                const result = await fetch(`http://localhost:3004/students/${id}`, {method: "POST"});
+                if (result.status === 204)
+                {
+                    getStudents();
+                }
+            }
+
+            async function addStudent(){
+                const requestOptions = {
+                    method: 'POST',
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify(studentToAdd.value),
+                    redirect: 'follow'
+                }
+                try {
+                    const result = await fetch("http://localhost:3004/students", requestOptions);
+                    if (result.status === 201)
+                    {
+                        const data = await result.json()
+                        getStudents(); // Hackey way to get all the students after adding a student
+                    }
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+
+            getStudents() // call get students function when the page loads
+
+            // remember res.render we had to pass options to the hbs template
+            return {
+                dateForNow,
+                studentsToDisplay,
+                studentToAdd,
+                addStudent,
+                deleteStudent
+            };
+        },
+    });
+
+    app.use(PrimeVue.Config, {
+        theme: {
+            preset: PrimeVue.Themes.Aura
+        }
+    });
+
+    app.component('p-datepicker', PrimeVue.DatePicker);
+    app.component('p-datatable', PrimeVue.DataTable);
+    app.component('p-column', PrimeVue.Column);
+
+    app.mount('#app');
+</script>
+</body>
+</html>

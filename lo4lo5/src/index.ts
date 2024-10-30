@@ -10,7 +10,7 @@ import * as createError from 'http-errors';
 import * as cors from 'cors';
 // cors options
 const corsOptions ={
-    origin: /localhost\:\d{4}$/i, // localhost any 4 digit port
+    origin: /localhost\:\d{5}$/i, // localhost any 4 digit port
     credentials: true, // needed to set and return cookies
     allowedHeaders: 'Origin,X-Requested-With,Content-Type,Accept,Authorization',
     methods: 'GET,PUT,POST,DELETE',
@@ -78,6 +78,8 @@ AppDataSource.initialize().then(async () => {
     });
 
 
+    // UNBRELLA CODE to catch any paths/http methods with no handlers declared
+    // ALSO catches any next() calls in OUR CODE ie controller actions / methods
     // catch 404 and forward to error handler
     app.use(function(req, res, next) {
         next(createError(404));
